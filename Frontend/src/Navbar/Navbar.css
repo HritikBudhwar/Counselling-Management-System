@@ -1,0 +1,46 @@
+/* main.li{
+    color:blue;
+    text-align: center;
+    ;
+} */
+/* .main{
+    background-color: black;
+    padding: 15px 15px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+ } */
+
+ .main {
+  background-color: black;
+  width: 100%;
+  padding: 15px 0; 
+  margin: 0;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* ensures it stays above other elements */
+}
+
+
+
+.list{
+    color:white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 70px; 
+    /* margin: 0; */
+    padding: 0;
+}
+.list ul {
+  color: aqua;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.list ul:hover {
+  color: white;
+  transform: scale(1.1);
+}
