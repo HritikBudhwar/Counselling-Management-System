@@ -1,10 +1,26 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
 import Navbar from './Navbar/Navbar.jsx'
+import CollegePage from './college/collegeList.jsx'
+import Home from './HomePage/Home.jsx'
+import Counseling from './Counseling/Counseling.jsx'
+import Registration from "./Registration/Registration.jsx";
+import Courses from './Courses/Courses.jsx'
 const App=()=>{
   return(
-    <div>
-      <Navbar/>
-    </div>
+    <Router>
+    <Navbar/>
+    <Routes>
+    <Route path="/" element={<Home/>}/>
+    <Route path="/college" element={<CollegePage />} />
+    <Route path="/courses" element={<Courses />} />
+    <Route path="/counseling" element={<Counseling />} />
+    <Route path="/registration" element={<Registration />} />
+    </Routes>
+
+
+
+    </Router>
   )
   
 }

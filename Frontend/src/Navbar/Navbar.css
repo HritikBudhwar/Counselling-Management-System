@@ -1,13 +1,4 @@
-/* main.li{
-    color:blue;
-    text-align: center;
-    ;
-} */
-/* .main{
-    background-color: black;
-    padding: 15px 15px;
-    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
- } */
+/* 
 
  .main {
   background-color: black;
@@ -18,7 +9,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000; /* ensures it stays above other elements */
+  z-index: 1000; 
 }
 
 
@@ -30,7 +21,7 @@
     justify-content: center;
     list-style: none;
     gap: 70px; 
-    /* margin: 0; */
+    
     padding: 0;
 }
 .list ul {
@@ -43,4 +34,45 @@
 .list ul:hover {
   color: white;
   transform: scale(1.1);
+} */
+
+
+
+.main {
+  background-color: black;
+  width: 100%;
+  padding: 15px 0; 
+  margin: 0;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
+
+.list {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 70px;
+  padding: 0;
+  margin: 0;
+}
+
+.list a {
+  color: aqua;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none; /* remove underline */
+  transition: 0.3s ease;
+}
+
+.list a:hover {
+  color: white;
+  transform: scale(1.1);
+}
+body {
+  padding-top: 80px; /* Adjust based on navbar height */
+}
+

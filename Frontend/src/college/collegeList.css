@@ -1,0 +1,57 @@
+.college-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: "Poppins", sans-serif;
+}
+
+.college-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1a237e;
+  font-size: 2rem;
+}
+
+.college-list {
+  list-style: none;
+  padding: 0;
+}
+
+.college-card {
+  background: #f4f6ff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.college-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.college-name {
+  font-size: 1.3rem;
+  color: #0d47a1;
+  margin-bottom: 8px;
+}
+
+.college-location {
+  font-size: 1rem;
+  color: #424242;
+}
+
+.loading {
+  text-align: center;
+  color: #1976d2;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  font-size: 1.1rem;
+  margin-top: 40px;
+}
