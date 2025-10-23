@@ -1,0 +1,53 @@
+/* Center everything vertically and horizontally */
+.home-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centers vertically */
+  align-items: center; /* centers horizontally */
+  background-color: #f0f4f8;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Heading styling */
+.home-container h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+/* Container for buttons */
+.button-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Common button styles */
+.button-container button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+/* Login button */
+.login-btn {
+  background-color: #007bff;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Signup button */
+.signup-btn {
+  background-color: #28a745;
+}
+
+.signup-btn:hover {
+  background-color: #1e7e34;
+}

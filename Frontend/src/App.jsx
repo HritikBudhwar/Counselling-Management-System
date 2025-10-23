@@ -6,6 +6,9 @@ import Home from './HomePage/Home.jsx'
 import Counseling from './Counseling/Counseling.jsx'
 import Registration from "./Registration/Registration.jsx";
 import Courses from './Courses/Courses.jsx'
+import Login from './authentication/login.jsx'
+import Signup from './authentication/signup.jsx'
+import Dashboard from "./authentication/Dashboard.jsx";
 const App=()=>{
   return(
     <Router>
@@ -16,6 +19,10 @@ const App=()=>{
     <Route path="/courses" element={<Courses />} />
     <Route path="/counseling" element={<Counseling />} />
     <Route path="/registration" element={<Registration />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<Signup />} />
+    <Route path="/dashboard" element={<Dashboard />} />
+
     </Routes>
 
 
