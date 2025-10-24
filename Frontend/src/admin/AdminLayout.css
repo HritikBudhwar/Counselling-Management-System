@@ -1,0 +1,21 @@
+/* src/components/admin/AdminLayout.css */
+
+.admin-layout-wrapper {
+    display: flex; /* Use flexbox to put the sidebar next to the content */
+    min-height: 100vh; /* Ensure the wrapper takes up the full viewport height */
+    width: 100%;
+}
+
+.admin-content {
+    flex-grow: 1; /* Allows the content area to take up all remaining space */
+    padding: 20px;
+    background-color: #f4f7f9; /* Light background for the content area */
+}
+
+/* Optional: Styling for a clean content look */
+.admin-content h2 {
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}

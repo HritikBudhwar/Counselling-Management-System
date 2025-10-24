@@ -1,3 +1,5 @@
 venv/
 env/
 .venv
+
+JWT_SECRET=a988276a9fc17d2a9e8200f7fbb89a083c04d724833fdbd89a033ffb67848b1d
