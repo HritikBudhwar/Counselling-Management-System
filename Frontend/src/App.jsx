@@ -9,6 +9,8 @@ import Courses from './Courses/Courses.jsx'
 import Login from './authentication/login.jsx'
 import Signup from './authentication/signup.jsx'
 import Dashboard from "./authentication/Dashboard.jsx";
+import AdminDashboard from './components/AdminDashboard.jsx'
+import PrivateRoute from "./components/PrivateRoute.jsx";
 const App=()=>{
   return(
     <Router>
@@ -21,7 +23,27 @@ const App=()=>{
     <Route path="/registration" element={<Registration />} />
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
-    <Route path="/dashboard" element={<Dashboard />} />
+    {/* <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+    <Route path="/private-route" element={<PrivateRoute />} /> */}
+    <Route
+    path="/dashboard"
+    element={
+      <PrivateRoute roles={['student', 'admin']}>
+        <Dashboard />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/admin-dashboard"
+    element={
+      <PrivateRoute roles={['admin']}>
+        <AdminDashboard />
+      </PrivateRoute>
+    }
+  />
+  {/* Unauthorized page */}
+  <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
 
     </Routes>
 

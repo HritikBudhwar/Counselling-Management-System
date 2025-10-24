@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import studentRoutes from "./routes/studentRoutes.js"
 import collegeRoutes from "./routes/collegeRoutes.js"
-
+import authRoutes from './routes/authRoutes.js'
+import courseRoute from '../backend/routes/courseRoute.js'
 dotenv.config();
 const app =express();
 
@@ -23,6 +24,10 @@ app.get('/',(req,res)=>{
 
 app.use("/students",studentRoutes);
 app.use("/colleges",collegeRoutes);
+app.use('/api/courses',courseRoute);
+
+app.use('/api/auth',authRoutes);       
+app.use('/api/colleges',collegeRoutes); 
 
 const PORT =process.env.PORT || 5000;
 app.listen(PORT,()=>console.log(`SERVER RUNNING ON PORT ${PORT}`));

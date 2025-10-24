@@ -1,6 +1,5 @@
 import db from '../config/db.js';
 
-// Get all colleges
 export const getAllCollege = async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM College");
@@ -11,7 +10,6 @@ export const getAllCollege = async (req, res) => {
   }
 };
 
-// Get college by ID
 export const getCollegeById = async (req, res) => {
   try {
     const [request] = await db.query("SELECT * FROM College WHERE college_id = ?", [req.params.id]);
@@ -23,7 +21,6 @@ export const getCollegeById = async (req, res) => {
   }
 };
 
-// Add college
 export const AddCollege = async (req, res) => {
   const { name, location, college_type, affiliation } = req.body;
   try {
@@ -38,7 +35,6 @@ export const AddCollege = async (req, res) => {
   }
 };
 
-// Update college
 export const updateCollege = async (req, res) => {
   const { name, location, college_type, affiliation } = req.body;
   try {
@@ -54,7 +50,6 @@ export const updateCollege = async (req, res) => {
   }
 };
 
-// Delete college
 export const deleteCollege = async (req, res) => {
   try {
     const [results] = await db.query("DELETE FROM College WHERE college_id = ?", [req.params.id]);
