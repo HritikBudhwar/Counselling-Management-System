@@ -1,4 +1,3 @@
-// src/components/admin/AdminSidebar.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminSidebar.css'; // Create this CSS file for styling
@@ -20,6 +19,8 @@ const AdminSidebar = () => {
         <Link to="/admin/colleges" className="sidebar-link">🏛️ Manage Colleges</Link>
         <Link to="/admin/courses" className="sidebar-link">📚 Manage Courses</Link>
         <Link to="/admin/students" className="sidebar-link">🧑‍🎓 Manage Students</Link>
+        <Link to="/admin/counseling" className="sidebar-link">📅 Counseling Setup</Link>
+        <Link to="/admin/allocate" className='sidebar-link'>Seat Allocation</Link>
       </nav>
       <button onClick={handleLogout} className="logout-btn">
         Logout

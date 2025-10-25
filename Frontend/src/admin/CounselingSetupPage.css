@@ -1,0 +1,99 @@
+/* src/components/admin/CounselingSetupPage.css */
+
+/* --- Reused General Admin Styles (Assuming you merged these into a single file or use a working @import) --- */
+
+/* You should include the styles for .add-section, .form-group, input, select, and buttons from your general styles here 
+   to ensure the components render correctly without path errors. */
+
+.add-section, .list-section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+/* ---------------------------------------------------------------------- */
+
+.counseling-setup-page h2 {
+    color: #8e44ad; /* Distinct color for Counseling heading (Purple) */
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* Styling for the Add Round Form Group */
+.counseling-setup-page .add-section .form-group {
+    display: grid;
+    /* 4 columns for inputs (Exam, Round, Date, Status) and a button */
+    grid-template-columns: repeat(4, 1fr) auto; 
+    gap: 15px;
+    align-items: center;
+}
+
+.counseling-setup-page .add-section .form-group button {
+    /* Style the Add Round button */
+    background-color: #9b59b6; 
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 100%; /* Match height of other inputs */
+}
+
+.counseling-setup-page .add-section .form-group button:hover {
+    background-color: #8e44ad;
+}
+
+/* --- Rounds List Styling --- */
+
+.counseling-setup-page .list-section h3 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.counseling-setup-page .list-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.counseling-setup-page .list-section li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f4f4f4;
+    transition: background-color 0.2s;
+}
+
+.counseling-setup-page .list-section li:hover {
+    background-color: #fafafa;
+}
+
+.counseling-setup-page .list-section li strong {
+    flex-basis: 30%;
+    font-size: 1.1em;
+}
+
+.counseling-setup-page .list-section li span {
+    flex-basis: 20%;
+    text-align: center;
+}
+
+.counseling-setup-page .list-section li select {
+    flex-basis: 15%;
+    padding: 8px;
+    border-color: #ccc;
+}

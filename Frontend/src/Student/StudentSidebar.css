@@ -1,0 +1,74 @@
+/* src/components/student/StudentSidebar.css */
+
+.student-sidebar {
+    width: 250px;
+    background-color: #f4f7f9; /* Light background */
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.profile-info {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #3498db; /* Blue separator */
+}
+
+.profile-info h3 {
+    margin: 0;
+    color: #333;
+}
+
+.profile-info p {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.student-nav-steps {
+    flex-grow: 1;
+}
+
+.student-nav-steps h4, .settings-heading {
+    color: #3498db;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 5px;
+}
+
+.sidebar-link {
+    display: block;
+    color: #34495e;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.sidebar-link:hover {
+    background-color: #ecf0f1;
+}
+
+.status-link {
+    font-weight: bold;
+    color: #2ecc71; /* Green for the final status step */
+}
+
+.logout-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
+}

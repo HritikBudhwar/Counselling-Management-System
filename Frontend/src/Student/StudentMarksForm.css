@@ -1,0 +1,22 @@
+/* src/admin/StudentMarksForm.css */
+
+/* Reuses .student-dashboard-form styles */
+
+.exam-input-group {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
+}
+
+.exam-input-group h3 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.exam-input-group input {
+    margin-bottom: 10px;
+}

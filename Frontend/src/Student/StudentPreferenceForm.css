@@ -1,0 +1,27 @@
+/* src/admin/StudentPreferenceForm.css */
+
+/* Reuses .student-dashboard-form styles */
+
+.preferences-form ul {
+    list-style: none;
+    padding: 0;
+}
+
+.preferences-form li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.preferences-form li strong {
+    flex-grow: 1; /* Allows college/course name to take most space */
+}
+
+.preferences-form li input {
+    width: 80px; /* Small width for rank input */
+    text-align: center;
+    margin-left: 20px;
+    /* Overrides the 100% width from the generic form styles */
+}

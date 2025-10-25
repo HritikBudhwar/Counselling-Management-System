@@ -1,0 +1,78 @@
+/* src/admin/StudentProfileForm.css (Also imported by Marks and Preference forms for general style) */
+
+.student-dashboard-form {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.student-dashboard-form h2 {
+    color: #3498db; /* Blue color for student flow headings */
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.student-dashboard-form input[type="text"],
+.student-dashboard-form input[type="number"],
+.student-dashboard-form select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.student-dashboard-form button[type="submit"] {
+    width: 100%;
+    background-color: #2ecc71; /* Green for successful continuation */
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.student-dashboard-form button[type="submit"]:hover {
+    background-color: #27ad60;
+}
+
+
+/* Add these properties to src/Student/StudentProfileForm.css */
+
+/* Target the email input field specifically */
+.student-dashboard-form input[type="email"] {
+    /* Inherit general form sizing */
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #3498db; /* Highlight border slightly */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Style for when the field is pre-filled and marked read-only */
+.student-dashboard-form input[type="email"][readonly] {
+    background-color: #f0f0f0; /* Light gray background to indicate it's not editable */
+    color: #555; /* Darker text for readability */
+    border-style: dashed; /* Dashed border style */
+    cursor: default;
+}
+
+/* Style for when the field is actively focused (if it is editable) */
+.student-dashboard-form input[type="email"]:focus {
+    border-color: #2ecc71; /* Green focus color */
+    outline: none;
+    box-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+}
