@@ -10,7 +10,6 @@ const AdminSidebar = () => {
     localStorage.removeItem('user');
     navigate('/login');
   };
-
   return (
     <div className="admin-sidebar">
       <h2>Admin Panel</h2>

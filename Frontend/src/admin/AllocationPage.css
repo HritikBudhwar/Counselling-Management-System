@@ -1,9 +1,4 @@
-/* src/components/admin/AllocationPage.css */
-
-/* --- General Structure & Sections --- */
-
 .allocation-page {
-    /* Uses inherited styles from AdminLayout */
     padding: 20px;
 }
 
@@ -31,7 +26,6 @@
 }
 
 /* --- Allocation Control Section --- */
-
 .allocation-control div {
     display: flex;
     gap: 15px;
@@ -66,8 +60,6 @@
     background-color: #c0392b;
 }
 
-/* --- Table Styling (Seat Matrix & Results) --- */
-
 .seat-matrix table, .allocation-results table {
     width: 100%;
     border-collapse: collapse;
@@ -92,12 +84,10 @@
     background-color: #f7f9fb;
 }
 
-/* Specific styling for Vacant column */
 .seat-matrix tbody td:nth-child(5) {
     font-weight: bold;
 }
 
-/* Specific styling for Status column in Allocation Results */
 .allocation-results tbody td:nth-child(5) {
     font-weight: bold;
     color: #27ae60; /* Green for allocated/success status */
