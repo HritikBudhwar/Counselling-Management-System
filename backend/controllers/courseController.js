@@ -57,3 +57,27 @@ export const deleteCourse = async (req, res) => {
     res.status(500).json({ Error: "Database error deleting course" });
   }
 };
+
+// backend/controllers/courseController.js (Must be in this file)
+// Add or verify this function exists and is exported:
+
+export const getAllCoursesWithDetails = async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT 
+                CR.course_id, 
+                CR.course_name, 
+                C.college_id, 
+                C.name AS college_name,
+                CR.duration_years,
+                CR.fees
+            FROM Course CR
+            JOIN College C ON CR.college_id = C.college_id
+            ORDER BY C.name, CR.course_name
+        `);
+        res.json(rows);
+    } catch (err) {
+        console.error("Error fetching detailed course list:", err);
+        res.status(500).json({ Error: "Database error fetching detailed course data" });
+    }
+};
