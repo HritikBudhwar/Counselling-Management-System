@@ -20,6 +20,7 @@ const AdminSidebar = () => {
         <Link to="/admin/students" className="sidebar-link">🧑‍🎓 Manage Students</Link>
         <Link to="/admin/counseling" className="sidebar-link">📅 Counseling Setup</Link>
         <Link to="/admin/allocate" className='sidebar-link'>Seat Allocation</Link>
+        <Link to="/admin/eligibility" className="sidebar-link">⚙️ Eligibility & Seats</Link> {/* <-- NEW LINK */}
       </nav>
       <button onClick={handleLogout} className="logout-btn">
         Logout

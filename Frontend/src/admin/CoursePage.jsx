@@ -1,11 +1,19 @@
-// src/components/admin/CoursePage.jsx
+// src/components/admin/CoursePage.jsx (FINAL FIX)
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './CoursePage.css'
+
 const CoursePage = () => {
-  const [colleges, setColleges] = useState([]); // Needed for the dropdown
+  const [colleges, setColleges] = useState([]); 
   const [courses, setCourses] = useState([]);
-  const [newCourse, setNewCourse] = useState({ college_id: "", course_name: "", duration_years: "", fees: "", eligibility_id: "" });
+  
+  // 🚨 FIX 1: REMOVE eligibility_id from state initialization
+  const [newCourse, setNewCourse] = useState({ 
+    college_id: "", 
+    course_name: "", 
+    duration_years: "", 
+    fees: "" 
+  });
   const token = localStorage.getItem("token");
  
   const fetchColleges = async () => {
@@ -40,18 +48,24 @@ const CoursePage = () => {
     try {
       await axios.post(
         "http://localhost:5000/api/courses/add", 
-        newCourse,
+        newCourse, // newCourse now only contains the four valid fields
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setNewCourse({ college_id: "", course_name: "", duration_years: "", fees: "", eligibility_id: "" });
+      // 🚨 FIX 2: Reset state without eligibility_id
+      setNewCourse({ college_id: "", course_name: "", duration_years: "", fees: "" }); 
       alert("Course added successfully!");
       fetchCourses();
+      
+      // NOTE: You still need a separate step to link Eligibility and Seats!
+      // This step will be done separately via the eligibility routes we designed.
+
     } catch (err) {
       console.error("Error adding course:", err);
-      alert("Failed to add course. Check backend route or DB connection.");
+      alert(err.response?.data?.message || "Failed to add course. Check backend logs.");
     }
   };
- const handleDeleteCourse = async (id) => {
+
+  const handleDeleteCourse = async (id) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
     try {
       await axios.delete(`http://localhost:5000/api/courses/${id}`, {
@@ -67,7 +81,7 @@ const CoursePage = () => {
     <div className="course-management">
       <h2>📚 Course Management</h2>
 
-      {/* ADD COURSE SECTION (Extracted from old AdminDashboard) */}
+      {/* ADD COURSE SECTION */}
       <section className="add-section">
         <h3>Add New Course</h3>
         <div className="form-group">
@@ -82,16 +96,18 @@ const CoursePage = () => {
               </option>
             ))}
           </select>
-          {/* ... (Other course input fields go here) ... */}
+          
           <input type="text" placeholder="Course Name" value={newCourse.course_name} onChange={(e) => setNewCourse({ ...newCourse, course_name: e.target.value })} />
           <input type="number" placeholder="Duration (in years)" value={newCourse.duration_years} onChange={(e) => setNewCourse({ ...newCourse, duration_years: e.target.value })} />
           <input type="number" placeholder="Fees (₹)" value={newCourse.fees} onChange={(e) => setNewCourse({ ...newCourse, fees: e.target.value })} />
-          <input type="number" placeholder="Eligibility ID" value={newCourse.eligibility_id} onChange={(e) => setNewCourse({ ...newCourse, eligibility_id: e.target.value })} />
+          
+          {/* 🚨 FIX 3: REMOVED THE ELIGIBILITY ID INPUT FIELD FROM JSX */}
+          
           <button onClick={handleAddCourse}>Add Course</button>
         </div>
       </section>
 
-      {/* COURSE LIST SECTION (Extracted from old AdminDashboard) */}
+      {/* COURSE LIST SECTION */}
       <section className="course-list">
         <h3>Existing Courses</h3>
         <ul>

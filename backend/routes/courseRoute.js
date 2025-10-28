@@ -47,13 +47,40 @@
 
 // backend/routes/courseRoutes.js (VERIFIED FIX)
 
+// import express from 'express';
+// // 🚨 Ensure you import the detailed fetch function
+// import { 
+//   getAllCourses, 
+//   addCourse, 
+//   deleteCourse,
+//   getAllCoursesWithDetails // Assuming this is imported from your controller
+// } from '../controllers/courseController.js'; 
+
+// const router = express.Router();
+
+// // GET /api/courses
+// router.get('/', getAllCourses);
+
+// // 🚨 CRITICAL FIX: Maps the frontend call /api/courses/details
+// router.get('/details', getAllCoursesWithDetails); 
+
+// // POST /api/courses/add
+// router.post('/add', addCourse); 
+
+// // DELETE /api/courses/:id
+// router.delete('/:id', deleteCourse);
+
+// export default router;
+
+
+
+// backend/routes/courseRoute.js (FINAL)
 import express from 'express';
-// 🚨 Ensure you import the detailed fetch function
 import { 
   getAllCourses, 
   addCourse, 
   deleteCourse,
-  getAllCoursesWithDetails // Assuming this is imported from your controller
+  getAllCoursesWithDetails 
 } from '../controllers/courseController.js'; 
 
 const router = express.Router();
@@ -61,7 +88,7 @@ const router = express.Router();
 // GET /api/courses
 router.get('/', getAllCourses);
 
-// 🚨 CRITICAL FIX: Maps the frontend call /api/courses/details
+// GET /api/courses/details
 router.get('/details', getAllCoursesWithDetails); 
 
 // POST /api/courses/add

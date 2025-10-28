@@ -8,6 +8,7 @@ import courseRoute from './routes/courseRoute.js'
 import counselingRoutes from './routes/counselingRoutes.js'
 import allocationRoutes from './routes/allocationRoutes.js'
 import examRoutes from './routes/examRoutes.js'
+import eligibilityRoutes from './routes/eligibilityRoutes.js'
 dotenv.config();
 const app =express();
 
@@ -35,6 +36,7 @@ app.use ('/api/counseling',counselingRoutes);
 // app.use('/api/counseling', counselingRoutes);
 app.use('/api/admin', allocationRoutes);
 app.use('/api/exams', examRoutes);
+app.use('/api/eligibility', eligibilityRoutes);
 
 const PORT =process.env.PORT || 5000;
 app.listen(PORT,()=>console.log(`SERVER RUNNING ON PORT ${PORT}`));

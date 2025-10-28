@@ -134,14 +134,13 @@
 
 
 
-// backend/controllers/allocationController.js (FINAL FIX)
+// backend/controllers/allocationController.js (Logic Confirmed)
 
 import db from '../config/db.js';
 
 const ALLOCATION_READY_STATUS = ['Open', 'Registration Open']; 
-const PRIMARY_EXAM_ID = 1; // Assuming JEE Main is exam_id = 1 for ranking
+const PRIMARY_EXAM_ID = 1; 
 
-// Helper function to check if a student meets the criteria for a course (Simplified)
 const isStudentEligible = async (student_id, course_id) => {
     // For now, checks if the student has a score recorded for the primary exam.
     const [score] = await db.query(
@@ -216,11 +215,9 @@ export const runSeatAllocation = async (req, res) => {
         });
     }
     
-    // Get the required counseling_id
     const { counseling_id } = counselingRound;
 
     try {
-        // Clear previous allocations for this specific round only
         await db.query("DELETE FROM Seat_Allocation WHERE round_no = ?", [round_no]);
 
         // --- STEP 1: Get Students in Merit Order ---
@@ -245,7 +242,6 @@ export const runSeatAllocation = async (req, res) => {
         for (const student of studentsInMerit) {
             const student_id = student.student_id;
             
-            // Get student's ordered preferences (1, 2, 3...)
             const [preferences] = await db.query(
                 "SELECT college_id, course_id, priority_rank FROM Preference WHERE student_id = ? ORDER BY priority_rank ASC",
                 [student.student_id]
@@ -254,22 +250,17 @@ export const runSeatAllocation = async (req, res) => {
             for (const pref of preferences) {
                 const course_id = pref.course_id;
 
-                // A. Check Eligibility (Simplified check implemented above)
                 const isEligible = await isStudentEligible(student_id, course_id);
-
-                // B. Check Capacity
                 const hasCapacity = availableSeats[course_id] > 0;
 
                 if (isEligible && hasCapacity) {
-                    // Allocate the seat (round_no and counseling_id are used here)
                     await db.query(
                         "INSERT INTO Seat_Allocation (student_id, college_id, course_id, round_no, counseling_id, status) VALUES (?, ?, ?, ?, ?, 'Allocated')",
-                        // 🚨 FIX: Ensure the INSERT order matches the SQL columns in your schema
                         [student.student_id, pref.college_id, course_id, round_no, counseling_id, 'Allocated']
                     );
                     availableSeats[course_id]--; 
                     allocationsMade++;
-                    break; // Seat allocated, move to the next student
+                    break;
                 }
             }
         }

@@ -166,6 +166,7 @@ import StudentMarksForm from "./Student/StudentMarksForm.jsx";
 import StudentPreferenceForm from "./Student/StudentPreferenceForm.jsx";
 import StudentProfilePage from "./Student/StudentProfilePage.jsx";
 import StudentSidebar from "./Student/StudentSidebar.jsx";
+import EligibilitySetupPage from "./admin/EligibilitySetupPage.jsx";
 
 // --- Student Layout Wrapper ---
 // This component provides the sidebar and renders the step component in the main area
@@ -290,6 +291,16 @@ const App=()=>{
           </AdminLayout>
         </PrivateRoute>
       }
+    />
+    <Route
+        path="/admin/eligibility" // <-- NEW PATH
+        element={
+            <PrivateRoute roles={['admin']}>
+                <AdminLayout>
+                    <EligibilitySetupPage />
+                </AdminLayout>
+            </PrivateRoute>
+        }
     />
     </Routes>
     </Router>
