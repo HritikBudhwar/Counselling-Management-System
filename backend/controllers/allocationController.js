@@ -133,8 +133,7 @@
 // };
 
 
-
-// backend/controllers/allocationController.js (Logic Confirmed)
+// backend/controllers/allocationController.js (FINAL ROBUST VERSION)
 
 import db from '../config/db.js';
 
@@ -142,17 +141,41 @@ const ALLOCATION_READY_STATUS = ['Open', 'Registration Open'];
 const PRIMARY_EXAM_ID = 1; 
 
 const isStudentEligible = async (student_id, course_id) => {
-    // For now, checks if the student has a score recorded for the primary exam.
+    // Current simplified eligibility check: Do they have a score for the primary exam?
     const [score] = await db.query(
         "SELECT score FROM Exam_Result WHERE student_id = ? AND exam_id = ?", 
         [student_id, PRIMARY_EXAM_ID]
     );
     return score.length > 0; 
 };
+export const getAllAllocations = async (req, res) => {
+    try {
+        // FIX: Assumes SA.round_no column now exists
+        const [allocations] = await db.query(`
+            SELECT
+                SA.round_no,
+                S.name AS student_name,
+                C.name AS college_name,
+                CR.course_name,
+                SA.status
+            FROM Seat_Allocation SA
+            JOIN Student S ON SA.student_id = S.student_id
+            JOIN Course CR ON SA.course_id = CR.course_id
+            JOIN College C ON CR.college_id = C.college_id
+            ORDER BY SA.round_no DESC, S.name ASC
+        `);
+        res.json(allocations);
+    } catch (err) {
+        console.error("Error fetching allocations:", err);
+        res.status(500).json({ Error: "Database error fetching allocations" });
+    }
+};
 
-// GET total available seats and allocated/vacant counts per course
+// ... (getSeatMatrix and getAllAllocations functions remain the same) ...
+
 export const getSeatMatrix = async (req, res) => {
     try {
+        // FIX: Assumes 'Seats' table now exists
         const [matrix] = await db.query(`
             SELECT
                 C.name AS college_name,
@@ -174,29 +197,6 @@ export const getSeatMatrix = async (req, res) => {
     }
 };
 
-// GET /api/admin/allocations - Get final detailed allocation list
-export const getAllAllocations = async (req, res) => {
-    try {
-        const [allocations] = await db.query(`
-            SELECT
-                SA.round_no,
-                S.name AS student_name,
-                C.name AS college_name,
-                CR.course_name,
-                SA.status
-            FROM Seat_Allocation SA
-            JOIN Student S ON SA.student_id = S.student_id
-            JOIN Course CR ON SA.course_id = CR.course_id
-            JOIN College C ON CR.college_id = C.college_id
-            ORDER BY SA.round_no DESC, S.name ASC
-        `);
-        res.json(allocations);
-    } catch (err) {
-        console.error("Error fetching allocations:", err);
-        res.status(500).json({ Error: "Database error fetching allocations" });
-    }
-};
-
 // POST /api/admin/allocate - Runs the central allocation algorithm
 export const runSeatAllocation = async (req, res) => {
     const { round_no } = req.body;
@@ -207,30 +207,45 @@ export const runSeatAllocation = async (req, res) => {
     const [counselingRoundResult] = await db.query(
         "SELECT counseling_id, status FROM Counseling WHERE round_no = ?", [round_no]
     );
-    const counselingRound = counselingRoundResult[0];
+    
+    // 🚨 FIX 1: Safely access the first result or set to null
+    const counselingRound = counselingRoundResult[0]; 
 
-    if (!counselingRound || !ALLOCATION_READY_STATUS.includes(counselingRound.status)) {
+    if (!counselingRound) {
+        return res.status(403).json({ message: `Allocation for Round ${round_no} failed. Counseling round not found.` });
+    }
+    
+    if (!ALLOCATION_READY_STATUS.includes(counselingRound.status)) {
         return res.status(403).json({ 
-            message: `Allocation for Round ${round_no} failed. Status must be 'Open' or 'Registration Open' (Current Status: ${counselingRound ? counselingRound.status : 'Not Found'}).` 
+            message: `Allocation for Round ${round_no} failed. Status must be 'Open' or 'Registration Open' (Current Status: ${counselingRound.status}).` 
         });
     }
     
-    const { counseling_id } = counselingRound;
+    const { counseling_id } = counselingRound; // 🚨 FIX 2: counseling_id is now safely available
 
     try {
+        // Clear previous allocations ONLY for this specific round
         await db.query("DELETE FROM Seat_Allocation WHERE round_no = ?", [round_no]);
 
-        // --- STEP 1: Get Students in Merit Order ---
+        // --- STEP 1: Get Students in Merit Order, EXCLUDING PREVIOUS ALLOCATIONS ---
         const [studentsInMerit] = await db.query(`
             SELECT 
                 S.student_id, 
                 ER.score
             FROM Student S
             JOIN Exam_Result ER ON S.student_id = ER.student_id
-            WHERE ER.exam_id = ?
+            
+            -- 🚨 FIX 3: LEFT JOIN to find students NOT in prior allocations
+            LEFT JOIN Seat_Allocation SA_PREV ON S.student_id = SA_PREV.student_id
+                AND SA_PREV.status = 'Allocated' 
+                AND SA_PREV.round_no < ?  
+                
+            WHERE ER.exam_id = ? 
+                AND SA_PREV.allocation_id IS NULL -- Only select students who do NOT have an existing allocation
+                
             ORDER BY ER.score DESC, S.student_id ASC 
-        `, [PRIMARY_EXAM_ID]);
-
+        `, [round_no, PRIMARY_EXAM_ID]); 
+        
         // --- STEP 2: Get Seat Matrix (Capacity) ---
         const [capacityRows] = await db.query("SELECT course_id, total_seats FROM Seats");
         let availableSeats = {};
@@ -244,7 +259,7 @@ export const runSeatAllocation = async (req, res) => {
             
             const [preferences] = await db.query(
                 "SELECT college_id, course_id, priority_rank FROM Preference WHERE student_id = ? ORDER BY priority_rank ASC",
-                [student.student_id]
+                [student_id]
             );
 
             for (const pref of preferences) {
@@ -256,7 +271,7 @@ export const runSeatAllocation = async (req, res) => {
                 if (isEligible && hasCapacity) {
                     await db.query(
                         "INSERT INTO Seat_Allocation (student_id, college_id, course_id, round_no, counseling_id, status) VALUES (?, ?, ?, ?, ?, 'Allocated')",
-                        [student.student_id, pref.college_id, course_id, round_no, counseling_id, 'Allocated']
+                        [student_id, pref.college_id, course_id, round_no, counseling_id, 'Allocated'] // Use student_id here
                     );
                     availableSeats[course_id]--; 
                     allocationsMade++;
@@ -266,8 +281,7 @@ export const runSeatAllocation = async (req, res) => {
         }
         
         // --- STEP 4: Update Counseling Status ---
-        await db.query("UPDATE Counseling SET status = 'Results Declared' WHERE counseling_id = ?", 
-            [counseling_id]);
+        await db.query("UPDATE Counseling SET status = 'Results Declared' WHERE counseling_id = ?", [counseling_id]);
 
         res.status(200).json({ 
             message: `Allocation for Round ${round_no} completed. ${allocationsMade} seats allocated.`,
