@@ -1,78 +1,81 @@
-/* 
-
- .main {
-  background-color: black;
-  width: 100%;
-  padding: 15px 0; 
-  margin: 0;
-  position: fixed; 
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000; 
-}
-
-
-
-.list{
-    color:white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    gap: 70px; 
-    
-    padding: 0;
-}
-.list ul {
-  color: aqua;
-  font-size: 18px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.list ul:hover {
-  color: white;
-  transform: scale(1.1);
-} */
-
-
+/* src/Navbar/Navbar.css */
 
 .main {
-  background-color: black;
-  width: 100%;
-  padding: 15px 0; 
-  margin: 0;
-  position: fixed; 
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+    /* Ensures the navbar spans the full width and handles the overall styling */
+    width: 100%;
+    
+    /* 🚨 FIX 1: Change background to black */
+    background-color: black; 
+    
+    /* 🚨 FIX 2: Change borders to black (as requested) */
+    border-top: 5px solid black; 
+    border-bottom: 5px solid black; 
+    
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
+/* General list styling */
 .list {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  gap: 70px;
-  padding: 0;
-  margin: 0;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    list-style: none;
+    padding: 0 20px; 
+    margin: 0;
 }
 
+/* 🚨 FIX 3: Target the links inside the list to change their color to white */
 .list a {
-  color: aqua;
-  font-size: 18px;
-  cursor: pointer;
-  text-decoration: none; /* remove underline */
-  transition: 0.3s ease;
+    color: white !important; /* Forces the link color to white */
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
 .list a:hover {
-  color: white;
-  transform: scale(1.1);
-}
-body {
-  padding-top: 80px; /* Adjust based on navbar height */
+    color: #f0f0f0; /* Slight off-white hover effect */
 }
 
+/* Grouping dynamic elements (right side) */
+.user-nav-group {
+    display: flex;
+    align-items: center;
+    list-style: none; 
+    margin-left: auto; 
+    gap: 15px; 
+}
+
+.welcome-item {
+    color: white; /* Changed from #f1f1f1 to white for consistency */
+    padding: 8px 0;
+    font-weight: 500;
+}
+
+/* Style for action buttons (Login/Logout/Dashboard) */
+/* Buttons should already have white text, but we ensure the background is set */
+
+.dashboard-btn, .login-btn, .logout-btn {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.login-btn, .dashboard-btn {
+    background-color: #3498db; /* Blue */
+    color: white;
+    border: none;
+}
+
+.logout-btn {
+    background-color: #e74c3c; /* Red */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.login-btn:hover, .dashboard-btn:hover {
+    background-color: #2980b9;
+}

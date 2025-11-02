@@ -1,37 +1,58 @@
-/* Center everything vertically and horizontally */
+/* src/Home.css (Updated for Attraction and Modernity) */
+
+/* --- Container and Background --- */
 .home-container {
-  height: 100vh;
+  /* Use viewport height minus the navbar height if you have one, 
+     otherwise, 100vh is fine. Assuming navbar is about 60px. */
+  height: calc(100vh - 60px); 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centers vertically */
-  align-items: center; /* centers horizontally */
-  background-color: #f0f4f8;
+  justify-content: center;
+  align-items: center;
+  
+  /* Softer, lighter background color */
+  background: linear-gradient(135deg, #f4f8ff, #e3f2fd); 
   font-family: 'Poppins', sans-serif;
+  color: #1a1a1a;
+  padding-top: 60px; /* Space for the top navbar */
 }
 
-/* Heading styling */
+/* --- Heading Styling --- */
 .home-container h1 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 40px;
-  color: #333;
+  font-size: 44px; /* Larger and more impactful */
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Container for buttons */
+/* --- New Tagline/Subtitle Styling --- */
+.tagline {
+  font-size: 18px;
+  font-weight: 400;
+  color: #555;
+  margin-bottom: 50px; /* Space before buttons */
+  max-width: 700px;
+  text-align: center;
+}
+
+/* --- Button Styling --- */
 .button-container {
   display: flex;
-  gap: 20px;
+  gap: 30px; /* Increased gap */
 }
 
 /* Common button styles */
 .button-container button {
-  padding: 12px 30px;
+  padding: 14px 40px; /* Larger hit area */
   border: none;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 30px; /* More pill-shaped */
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
   color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Login button */
@@ -41,6 +62,8 @@
 
 .login-btn:hover {
   background-color: #0056b3;
+  transform: translateY(-3px); /* Lift button on hover */
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
 }
 
 /* Signup button */
@@ -50,4 +73,6 @@
 
 .signup-btn:hover {
   background-color: #1e7e34;
+  transform: translateY(-3px); /* Lift button on hover */
+  box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
 }

@@ -4,8 +4,14 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(120deg, #89f7fe, #66a6ff);
   font-family: 'Poppins', sans-serif;
+  
+  /* --- 🚨 UPDATED BACKGROUND --- */
+  /* Replaced the bright blue gradient with a smoother, animated one */
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite; 
+  /* --- End of Update --- */
 }
 
 .signup-box {
@@ -15,7 +21,8 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   width: 380px;
   text-align: center;
-  animation: fadeIn 0.8s ease-in-out;
+  /* Keep the fadeIn animation */
+  animation: fadeIn 0.8s ease-in-out; 
 }
 
 .signup-box h2 {
@@ -71,4 +78,18 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 🚨 ADD THIS KEYFRAME ANIMATION --- */
+/* This controls the background movement */
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

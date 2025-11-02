@@ -1,4 +1,4 @@
-/* src/pages/dashboard.css */
+/* src/pages/dashboard.css
 
 .dashboard-container {
   max-width: 1200px;
@@ -29,4 +29,57 @@ h2 {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+} */
+
+
+/* src/pages/dashboard.css (Updated for Better Visibility and Structure) */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50; /* Dark primary heading */
+  font-size: 2em;
+}
+
+.student-view, .admin-view {
+  /* Use grid or flex for content sections to arrange multiple cards/forms */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+h2 {
+  color: #3498db; /* Clear, visible section color */
+  border-bottom: 2px solid #3498db; /* Blue underline for sections */
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.section {
+  background-color: #ffffff; /* White background for better contrast against page background */
+  padding: 25px; /* Increased padding */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Stronger shadow to lift the element */
+  border: 1px solid #e0e0e0; /* Subtle border */
+}
+
+/* Ensure list items inside sections (like preference lists) are readable */
+.section ul, .section ol {
+    list-style-position: inside;
+    padding-left: 0;
+}
+.section li {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: #555;
 }
