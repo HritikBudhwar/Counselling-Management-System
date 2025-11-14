@@ -100,11 +100,6 @@ export const getAllCourses = async (req, res) => {
   }
 };
 
-// backend/controllers/courseController.js (MODIFIED addCourse)
-
-// backend/controllers/courseController.js (MODIFIED addCourse)
-
-// POST a new course
 export const addCourse = async (req, res) => {
   // 🚨 FIX: Removed eligibility_id from destructuring
   const { college_id, course_name, duration_years, fees } = req.body; 
@@ -126,38 +121,34 @@ export const addCourse = async (req, res) => {
     res.status(500).json({ Error: "Database error adding course" });
   }
 };
-// ... (All other functions remain the same: getAllCourses, deleteCourse, getAllCoursesWithDetails)
-// ... (All other functions remain the same: getAllCourses, deleteCourse, getAllCoursesWithDetails)
 
-// DELETE a course
 export const deleteCourse = async (req, res) => {
+  const { id } = req.params; // This is the course_id to delete
+
   try {
-    const [results] = await db.query("DELETE FROM Course WHERE course_id = ?", [req.params.id]);
+    await db.query("START TRANSACTION");
+    await db.query("DELETE FROM Course_Eligibility WHERE course_id = ?", [id]);
+    await db.query("DELETE FROM Preference WHERE course_id = ?", [id]);
+    await db.query("DELETE FROM Seat_Allocation WHERE course_id = ?", [id]);
+    await db.query("DELETE FROM Seats WHERE course_id = ?", [id]);
+    const [results] = await db.query("DELETE FROM Course WHERE course_id = ?", [id]);
     if (results.affectedRows === 0) {
+      await db.query("ROLLBACK");
       return res.status(404).json({ message: "Course not found" });
     }
-    res.json({ message: "Course deleted successfully" });
+    await db.query("COMMIT");
+    res.json({ message: "Course and all related data deleted successfully" });
   } catch (err) {
-    console.error("Error deleting course:", err);
-    res.status(500).json({ Error: "Database error deleting course" });
+    await db.query("ROLLBACK");
+    console.error("Error deleting course (Transaction Rolled Back):", err);
+    res.status(500).json({ Error: "Database error during course deletion", sqlMessage: err.sqlMessage });
   }
 };
-
 // GET /api/courses/details - Required by StudentPreferenceForm
 export const getAllCoursesWithDetails = async (req, res) => {
     try {
-        const [rows] = await db.query(`
-            SELECT 
-                CR.course_id, 
-                CR.course_name, 
-                C.college_id, 
-                C.name AS college_name,
-                CR.duration_years,
-                CR.fees
-            FROM Course CR
-            JOIN College C ON CR.college_id = C.college_id
-            ORDER BY C.name, CR.course_name
-        `);
+        const [result] = await db.query("CALL GetAllCoursesWithDetails()");
+        const rows = result[0]; 
         res.json(rows);
     } catch (err) {
         console.error("Error fetching detailed course list:", err);

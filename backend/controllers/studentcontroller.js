@@ -164,7 +164,6 @@
 
 
 
-// backend/controllers/studentController.js (FIXED)
 import db from '../config/db.js';
 
 const getStudentIdFromUser = async (user_email) => {

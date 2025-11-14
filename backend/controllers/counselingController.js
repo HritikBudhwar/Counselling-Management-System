@@ -123,10 +123,36 @@ export const getAllCounselingRounds = async (req, res) => {
     // FIX APPLIED: Using E.exam_name instead of E.name
     const [rows] = await db.query(`
       SELECT 
-        C.*, E.exam_name AS exam_name 
-      FROM Counseling C
-      LEFT JOIN Exam E ON C.exam_id = E.exam_id
-      ORDER BY C.exam_id, C.round_no
+    C.counseling_id,
+    C.round_no,
+    C.status,
+    C.counseling_date,
+    E.exam_name,
+    
+    -- Aggregates data to show the "health" of the counseling round
+    COUNT(SA.allocation_id) AS total_seats_allocated,
+    SUM(S.total_seats) AS total_capacity_for_exam
+    
+FROM 
+    Counseling C
+    
+-- Join with Exam (as you did)
+JOIN 
+    Exam E ON C.exam_id = E.exam_id
+    
+-- Join Course, Seats, and Allocation to aggregate data
+LEFT JOIN 
+    Course CR ON E.exam_id = CR.exam_id  -- Assumes Course is linked to Exam
+LEFT JOIN 
+    Seats S ON CR.course_id = S.course_id
+LEFT JOIN 
+    Seat_Allocation SA ON CR.course_id = SA.course_id AND SA.counseling_id = C.counseling_id
+    
+GROUP BY
+    C.counseling_id, E.exam_name, C.round_no, C.status, C.counseling_date
+    
+ORDER BY 
+    C.exam_id, C.round_no;
     `);
     res.json(rows);
   } catch (err) {
